@@ -6,13 +6,13 @@
 #    By: ccottin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/03 12:16:24 by ccottin           #+#    #+#              #
-#    Updated: 2022/10/21 22:34:39 by ccottin          ###   ########.fr        #
+#    Updated: 2022/10/22 00:53:51 by ccottin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= convert
+NAME	= serialize
 
-SRCS	= main.cpp FindType.cpp Convert.cpp utils.cpp
+SRCS	= main.cpp 
 
 CC	= c++
 

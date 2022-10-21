@@ -6,13 +6,18 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 05:53:25 by ccottin           #+#    #+#             */
-/*   Updated: 2022/10/21 03:50:30 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/10/22 00:03:10 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONVERT_HPP
 # define CONVERT_HPP
 
+# include <cfloat> 
+# include <climits>
+# include <iostream>
+# include <cstdlib>
+# include <stdlib.h>
 # include <string>
 # include "Convert.hpp"
 
@@ -49,5 +54,9 @@ class Converted {
 		tType const			_type;
 
 };
+
+void	print_impossible(void);
+void	printD(std::string str);
+void	printF(std::string str);
 
 #endif

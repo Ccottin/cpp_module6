@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 19:41:24 by ccottin           #+#    #+#             */
-/*   Updated: 2022/10/21 05:32:19 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/10/22 00:22:07 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 eType	checkElse(std::string str)
 {
-	std::cout << "coucou";
 	if (!str.compare("-inff") || !str.compare("nanf")
 		|| !str.compare("+inff"))
 		return (FLOAT);

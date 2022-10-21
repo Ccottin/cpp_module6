@@ -6,41 +6,49 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 03:35:29 by ccottin           #+#    #+#             */
-/*   Updated: 2022/10/21 05:37:35 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/10/22 00:25:37 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <cmath> //could be useful for inf and nan
-//#include <climits> //int lim
-//#include <cfloat> //float lim
-//#include <limits> //should do it for all isntead
-#include <iostream>
-#include <cstdlib>
-#include <string>
 #include "Convert.hpp"
-/*gerer le cas des + et - que ascii*/
+#include <errno.h>
+#include <cmath>
+
 void	Converted::isChar(void) const
 {
 	char	c;
 
 	c = getData()[0];
-	std::cout << "char: " << c << std::endl;
+	if ((c < 8) || (c > 12 && c < 32) || c == 127)
+		std::cout << "char: non displayable " << std::endl;
+	else
+		std::cout << "char: " << c << std::endl;
 	std::cout << std::fixed;
 	std::cout.precision(1);
 	std::cout << "int: "	<< static_cast<int>(c) << std::endl;
 	std::cout << "float: " << static_cast<float>(c) << "f" << std::endl;
 	std::cout << "double: " << static_cast<double>(c) << std::endl;
 }
-/*gerer les cas des nan et autre + overflow et lims, gerer l overflow de int max*/
+
 void	Converted::isInt(void) const
 {
 	int i;
 
-	i = atoi(getData().c_str());
-	std::cout << "char: " << static_cast<char>(i) << std::endl;
+	i = static_cast<int>(strtol(getData().c_str(), NULL, 10));
+	if (errno)
+	{
+		print_impossible();
+		return ;
+	}
+	if ( i <= -129 || i > 127)
+		std::cout << "char: impossible" << std::endl;
+	else if ((i > -129 && i < 8) || (i > 12 && i < 32) || i == 127)
+		std::cout << "char: non displayable " << std::endl;
+	else
+		std::cout << "char: " << static_cast<char>(i) << std::endl;
 	std::cout << "int: " << i << std::endl;
 	std::cout << std::fixed;
-	std::cout.precision(1); 
+	std::cout.precision(1);
 	std::cout << "float: " << static_cast<float>(i) << "f" << std::endl;
 	std::cout << "double: " << static_cast<double>(i) << std::endl;
 }
@@ -48,13 +56,33 @@ void	Converted::isInt(void) const
 void	Converted::isFloat(void) const
 {
 	float	f;
-
-	f = (atof(getData().c_str()));
-	if (f / f == 1) //objectif == trucer une vraie condition
-		std::cout << "char: " << static_cast<char>(f) << std::endl;
+	
+	if (!getData().compare("nanf") || !getData().compare("-inff") 
+	|| !getData().compare("+inff"))
+	{
+		printF(getData());
+		return ;
+	}
+	f = static_cast<float>(strtof(getData().c_str(), NULL));
+	if (errno)
+	{
+		print_impossible();
+		return ;
+	}
+	if (f <= -129 || f > 127)
+		std::cout << "char: impossible" << std::endl;
+	else if ((f > -129 && f < 8) || (f > 12 && f < 32) || f == 127
+		|| f - static_cast<int>(f) != 0)
+		std::cout << "char: non displayable" << std::endl;
 	else
-		std::cout << "char: impossible " << std::endl;
+		std::cout << "char: " << static_cast<char>(f) << std::endl;
+	
+	if (f > INT_MAX || f < INT_MIN)
+		std::cout << "int: impossible" << std::endl;
+	else	
 	std::cout << "int: " << static_cast<int>(f) << std::endl;
+	
+	std::cout << std::fixed;
 	std::cout << "float: " << f << "f" << std::endl;
 	std::cout << "double: " << static_cast<double>(f) << std::endl;
 }
@@ -63,13 +91,36 @@ void	Converted::isDouble(void) const
 {
 	double	d;
 
-	d = static_cast<double>(atof(getData().c_str()));
-	if (d / d == 1)
-		std::cout << "char: " << static_cast<char>(d) << std::endl;
+	if (!getData().compare("nan") || !getData().compare("-inf") 
+	|| !getData().compare("+inf"))
+	{
+		printD(getData());
+		return ;
+	}
+	d = static_cast<double>(strtod(getData().c_str(), NULL));
+	if (errno)
+	{
+		print_impossible();
+		return ;
+	}
+	if (d <= -129 || d > 127)
+		std::cout << "char: impossible" << std::endl;
+	else if ((d > -129 && d < 8) || (d > 12 && d < 32) || d == 127
+		|| d - static_cast<int>(d) != 0)
+		std::cout << "char: non displayable " << std::endl;
 	else
-		std::cout << "char: impossible " << std::endl;
-	std::cout << "int: " << static_cast<int>(d) << std::endl;
-	std::cout << "float: " << static_cast<int>(d) << "f" << std::endl;
+		std::cout << "char: " << static_cast<char>(d) << std::endl;
+	
+	if (d > INT_MAX || d < INT_MIN)
+		std::cout << "int: impossible" << std::endl;
+	else	
+		std::cout << "int: " << static_cast<int>(d) << std::endl;
+	
+	std::cout << std::fixed;
+	if (d > FLT_MAX) 
+		std::cout << "float: imposible" << std::endl;
+	else
+		std::cout << "float: " << static_cast<float>(d) << "f" << std::endl;
 	std::cout << "double: " << d << std::endl;
 }
 
@@ -78,30 +129,25 @@ void	Converted::isDouble(void) const
 
 Converted::Converted(void) : _data(""), _type(EMPTY)
 {
-	std::cout << "Default constructor called" << std::endl;
 }
 
 Converted::Converted(std::string const &str, tType const type) : _data(str), _type(type)
 {
-	std::cout << "Type constructor called" << std::endl;
 }
 
 Converted::Converted(Converted const &ref) : _data(ref.getData()),
 	_type(ref.getType())
 {
-	std::cout << "Copy constructor called" << std::endl;
 }
 
 Converted	&Converted::operator=(Converted const &ref)
 {
 	(void)ref;
-	std::cout << "Copy operator called" << std::endl;
 	return (*this);
 }
 
 Converted::~Converted(void)
 {
-	std::cout << "Destructor called" << std::endl;	
 }
 
 /* Getters */
