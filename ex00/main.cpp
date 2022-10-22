@@ -6,12 +6,10 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 03:33:56 by ccottin           #+#    #+#             */
-/*   Updated: 2022/10/22 00:24:30 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/10/22 17:03:39 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <string>
 #include "Convert.hpp"
 
 eType	FindType(std::string str);

@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 19:41:24 by ccottin           #+#    #+#             */
-/*   Updated: 2022/10/22 00:22:07 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/10/22 16:40:38 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ eType	isFloat(std::string str, long unsigned int i, bool number)
 		else
 			return (checkElse(str));
 	}
-	if (i == size && str[i - 1] == 'f' && number == true)
+	if (i == size && str[i - 1] == 'f' && number == true
+			&& point == true)
 		return (FLOAT);
 	return (DEFAULT);
 }
@@ -78,7 +79,7 @@ eType	isDouble(std::string str, long unsigned int i, bool number)
 		else
 			return (DEFAULT);
 	}
-	if (i == size && number == true)
+	if (i == size && number == true && point == true)
 		return (DOUBLE);
 	return (DEFAULT);
 }

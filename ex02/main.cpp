@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 01:10:02 by ccottin           #+#    #+#             */
-/*   Updated: 2022/10/22 01:37:56 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/10/22 16:36:23 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,19 @@ Base	*generate(void)
 	switch (i)
 	{
 		case (0) :
+			std::cout << "val returned = A" << std::endl;
+			delete b;
+			delete c;
 			return (a);
 		case (1) :
+			std::cout << "val returned = B" << std::endl;
+			delete a;
+			delete c;
 			return (b);
 		default :
+			std::cout << "val returned = C" << std::endl;
+			delete b;
+			delete a;
 			return (c);
 	}
 }
@@ -52,40 +61,45 @@ void	identify(Base *p)
 	if (c!= NULL)
 		std::cout << "Class is type C" << std::endl;
 }
-/*
-void	identifyy(Base &p) // a modifier
+
+void	identify(Base &p)
 {
 	try
 	{
-		dynamic_cast<A*>(p);
+		dynamic_cast<A&>(p);
 		std::cout << "class is type A" << std::endl;
 		return ;
 
-	} catch { }
+	}
+	catch (std::exception &e)
+	{ }
 	try
 	{
-		dynamic_cast<B*>(p);
+		dynamic_cast<B&>(p);
 		std::cout << "class is type B" << std::endl;
 		return ;
 
-	} catch { }
+	} 
+	catch (std::exception &e)
+	{ }
 	try
 	{
-		dynamic_cast<C*>(p);
+		dynamic_cast<C&>(p);
 		std::cout << "class is type C" << std::endl;
 		return ;
 
-	} catch { }
-
+	} 
+	catch (std::exception &e)
+	{ }
 }
-*/
+
+
 int	main(void)
 {
 	Base	*base;
 
 	base = generate();
 	identify(base);
-	base = generate();
-//	identifyy(base);
+	identify(base);
 	delete base;
 }

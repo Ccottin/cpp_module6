@@ -6,13 +6,11 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 03:35:29 by ccottin           #+#    #+#             */
-/*   Updated: 2022/10/22 00:25:37 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/10/22 17:13:45 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Convert.hpp"
-#include <errno.h>
-#include <cmath>
 
 void	Converted::isChar(void) const
 {
@@ -32,14 +30,16 @@ void	Converted::isChar(void) const
 
 void	Converted::isInt(void) const
 {
-	int i;
+	long int	l;
+	int			i;
 
-	i = static_cast<int>(strtol(getData().c_str(), NULL, 10));
-	if (errno)
+	l = (strtol(getData().c_str(), NULL, 10));
+	if (errno || l > 2147483647 || l < -2147483648)
 	{
 		print_impossible();
 		return ;
 	}
+	i = static_cast<int>(l);
 	if ( i <= -129 || i > 127)
 		std::cout << "char: impossible" << std::endl;
 	else if ((i > -129 && i < 8) || (i > 12 && i < 32) || i == 127)
@@ -117,7 +117,7 @@ void	Converted::isDouble(void) const
 		std::cout << "int: " << static_cast<int>(d) << std::endl;
 	
 	std::cout << std::fixed;
-	if (d > FLT_MAX) 
+	if (d > FLT_MAX || d < -FLT_MAX)  
 		std::cout << "float: imposible" << std::endl;
 	else
 		std::cout << "float: " << static_cast<float>(d) << "f" << std::endl;
