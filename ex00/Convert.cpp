@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 03:35:29 by ccottin           #+#    #+#             */
-/*   Updated: 2022/10/22 17:13:45 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/10/22 18:31:47 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	Converted::isInt(void) const
 	long int	l;
 	int			i;
 
-	l = (strtol(getData().c_str(), NULL, 10));
+	l = (std::strtol(getData().c_str(), NULL, 10));
 	if (errno || l > 2147483647 || l < -2147483648)
 	{
 		print_impossible();
@@ -63,7 +63,7 @@ void	Converted::isFloat(void) const
 		printF(getData());
 		return ;
 	}
-	f = static_cast<float>(strtof(getData().c_str(), NULL));
+	f = static_cast<float>(std::strtof(getData().c_str(), NULL));
 	if (errno)
 	{
 		print_impossible();
@@ -97,7 +97,7 @@ void	Converted::isDouble(void) const
 		printD(getData());
 		return ;
 	}
-	d = static_cast<double>(strtod(getData().c_str(), NULL));
+	d = static_cast<double>(std::strtod(getData().c_str(), NULL));
 	if (errno)
 	{
 		print_impossible();

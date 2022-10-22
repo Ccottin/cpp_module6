@@ -6,7 +6,7 @@
 /*   By: ccottin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 01:10:02 by ccottin           #+#    #+#             */
-/*   Updated: 2022/10/22 16:36:23 by ccottin          ###   ########.fr       */
+/*   Updated: 2022/10/22 18:33:59 by ccottin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ Base	*generate(void)
 
 	int	i;
 
-	srand(time(NULL));
-	i = rand() %3;
+	std::srand(std::time(NULL));
+	i = std::rand() %3;
 	switch (i)
 	{
 		case (0) :
